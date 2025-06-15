@@ -2,17 +2,18 @@ package main
 
 import (
 	"Autotester/configs"
-	"Autotester/internal"
+	"Autotester/internal/handlers"
 	"fmt"
 	"net/http"
 )
 
 func main() {
 	config := configs.LoadConfig()
+
 	router := http.NewServeMux()
-	internal.NewScanHandler(router, internal.ScanHandlerDeps{
-		Config: config,
-	})
+
+	handlers.RegisterRoutes(router, config)
+
 	server := http.Server{
 		Addr:    ":8081",
 		Handler: router}
