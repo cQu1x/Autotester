@@ -8,9 +8,13 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List
 from huggingface_hub import InferenceClient
+import uvicorn
 
 
 HF_TOKEN = "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"
+
+
+uvicorn.run("main:app", host="0.0.0.0", port=3000)
 
 
 def ask_ai(prompt: str):
@@ -282,7 +286,7 @@ def get_buttons(base_url, html):
     return forms
 
 
-@app.post("/mvp_zero", response_model=OutputData)
+@app.post("/", response_model=OutputData)
 def main(data: InputData):
     runner = WebTestRunner(data.link)
     return runner.check_page(data.link, data.criterias)
