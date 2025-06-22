@@ -31,8 +31,8 @@ class APIResponse(BaseModel):
 
 
 class InputData(BaseModel):
-    link: str
-    criterias: List[str]
+    url: str
+    tests: List[str]
 
 
 app = FastAPI()
@@ -67,8 +67,8 @@ class WebTestRunner:
             return soup
         return max(candidates, key=lambda tag: len(tag.get_text(strip=True)))
 
-    def check_page(self, link: str, prompts: List[str]) -> List[bool]:
-        resp = self.session.get(link)
+    def check_page(self, url: str, prompts: List[str]) -> List[bool]:
+        resp = self.session.get(url)
         resp.raise_for_status()
         soup = BeautifulSoup(resp.text, 'lxml')
         results: List[bool] = []
@@ -85,17 +85,17 @@ class WebTestRunner:
 
 @app.post("/run", response_model=APIResponse)
 def run_tests(data: InputData):
-    runner = WebTestRunner(data.link)
+    runner = WebTestRunner(data.url)
     try:
-        results = runner.check_page(data.link, data.criterias)
+        results = runner.check_page(data.url, data.url)
     except Exception as e:
         return APIResponse(status="error", error=str(e))
 
-    response = [{'test': data.criterias[i], 'result': results[i]} for i in range(len(data.criterias))]
+    response = [{'test': data.url[i], 'result': results[i]} for i in range(len(data.url))]
 
     # Prepare payload to send to Go API
     payload = {
-        "criterias": data.criterias,
+        "test": data.url,
         "results": response
     }
     try:
