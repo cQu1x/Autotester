@@ -6,7 +6,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List, Any, Optional
 
-HF_TOKEN = "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"
+HF_TOKEN = "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"
 
 
 def ask_ai(prompt: str) -> str:
