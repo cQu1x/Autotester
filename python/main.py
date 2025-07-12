@@ -61,61 +61,46 @@ class WebTestRunner:
         driver.quit()
         return html
 
-    def check_with_rules(self, soup: BeautifulSoup, criterion: str) -> Optional[bool]:
-        c = criterion.lower()
-        if "login" in c:
-            return bool(soup.find("input", {"type": "password"}))
-        if "submit" in c or "button" in c:
-            return bool(soup.find("button") or soup.find("input", {"type": "submit"}))
-        if "header" in c and "welcome" in c:
-            return bool(soup.find(lambda tag: tag.name in ["h1", "h2"] and "welcome" in tag.get_text().lower()))
-        return None
-
-    def narrow_relevant_html(self, soup: BeautifulSoup) -> BeautifulSoup:
-        candidates = soup.find_all(['main', 'div'], recursive=True)
-        if not candidates:
-            return soup
-        return max(candidates, key=lambda tag: len(tag.get_text(strip=True)))
-
     def check_page(self, url: str, prompts: List[str]) -> List[bool]:
         # Fetch page via Selenium for JS-rendered content
         raw_html = self.fetch_page(url)
         soup = BeautifulSoup(raw_html, 'lxml')
         results: List[bool] = []
         for criterion in prompts:
-            result = self.check_with_rules(soup, criterion)
-            if result is None:
-                # Extract context for AI if no simple rule
-                excerpt = self.narrow_relevant_html(soup).get_text(" ", strip=True)[:1000]
-                c_lower = criterion.lower()
-                # Choose prompt based on criterion template
-                if c_lower.startswith("does") and "exist" in c_lower:
-                    instruct = (
-                        "Please answer 'Yes' or 'No'.\n"
-                        f"Criterion: \"{criterion}\" means check if the specified element exists on the page.\n"
-                        "Example: Does logo exist? -> Yes if a logo image is present near the company name.\n"
-                    )
-                elif c_lower.startswith("is") and "clickable" in c_lower:
-                    instruct = (
-                        "Please answer 'Yes' or 'No'.\n"
-                        f"Criterion: \"{criterion}\" means check if the specified element is clickable (e.g., links, buttons).\n"
-                        "Example: Is 'Submit' button clickable? -> Yes if it responds to clicks.\n"
-                    )
-                elif c_lower.startswith("does") and ("attribute" in c_lower or "value" in c_lower):
-                    instruct = (
-                        "Please answer 'Yes' or 'No'.\n"
-                        f"Criterion: \"{criterion}\" means check if the element has the given attribute or value.\n"
-                        "Example: Does input have attribute 'placeholder'? -> Yes if the input tag includes placeholder attribute.\n"
-                    )
-                else:
-                    instruct = (
-                        "Please answer 'Yes' or 'No'.\n"
-                        f"Criterion: \"{criterion}\". Assess based on page content intelligently.\n"
-                    )
-                question = f"{instruct}Context: {excerpt}"
-                answer = ask_ai(question).lower()
-                logging.info("AI answer: %s", answer)
-                result = answer.startswith("yes")
+            # Extract context for AI if no simple rule
+            excerpt = soup
+            c_lower = criterion.lower()
+            # Choose prompt based on criterion template
+            if c_lower.startswith("does") and "exist" in c_lower:
+                instruct = (
+                    "Please answer 'Yes' or 'No'.\n"
+                    f"Criterion: \"{criterion}\" means check if the specified element exists on the page.\n"
+                    "Example: Does logo exist? -> Yes if a logo image is present near the company name.\n"
+                )
+            elif c_lower.startswith("is") and "clickable" in c_lower:
+                instruct = (
+                    "Please answer 'Yes' or 'No'.\n"
+                    f"Criterion: \"{criterion}\" means check if the specified element is clickable (e.g., links, buttons).\n"
+                    "Example: Is 'Submit' button clickable? -> Yes if it responds to clicks.\n"
+                )
+            elif c_lower.startswith("does") and ("attribute" in c_lower or "value" in c_lower):
+                instruct = (
+                    "Please answer 'Yes' or 'No'.\n"
+                    f"Criterion: \"{criterion}\" means check if the element has the given attribute or value.\n"
+                    "Example: Does input have attribute 'placeholder'? -> Yes if the input tag includes placeholder attribute.\n"
+                )
+            else:
+                instruct = (
+                    "Please answer 'Yes' or 'No'.\n"
+                    f"Criterion: \"{criterion}\". Assess based on page content intelligently.\n"
+                )
+            question = f"{instruct}Context: {excerpt}"
+            answer = ask_ai(question).lower()
+            f = open('output.txt', 'w')
+            f.write(answer)
+            f.close()
+            logging.info("AI answer: %s", answer)
+            result = answer.startswith("yes")
             results.append(result)
         return results
 
