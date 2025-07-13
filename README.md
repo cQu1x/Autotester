@@ -8,7 +8,7 @@ Automatically check websites using custom test cases — simple, fast, and witho
 https://drive.google.com/file/d/1QEE76XP4mnRaU0ynXxHeObb-Hm-ILD3P/view?usp=sharing
 
 ### Link to product
-http://31.129.111.114:8080/
+[http://31.129.111.114:8080/](https://innotest.tech/)
 
 ### Project Goal(s) and Description
 The goal of the project is to create a simple and accessible tool for checking websites for basic interface elements such as fields, buttons, and headings. The user enters a URL and specifies what needs to be checked, and the system runs an automated test and provides a result in the form of ✅/❌ for each question.
