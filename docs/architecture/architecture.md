@@ -8,7 +8,7 @@ This project follows a client-server architecture with separate layers for front
 | Backend (API) | Go 1.24, Clean Architecture                  | REST API, routing, business logic                          |
 | AI Service    | Python 3.11, FastAPI, OpenAI SDK             | LLM-based test generation and natural language processing  |
 | DevOps        | Docker, Docker Compose, GitHub Actions       | Containerization, local development, CI/CD                 |
-| Hosting       | VPS (Ubuntu 22.04), Caddy                    | Production deployment and reverse proxy                    |
+| Hosting       | VPS (Ubuntu 22.04), nginx                    | Production deployment and reverse proxy                    |
 | Testing       | Go test, Pytest, Flutter test                | Unit, integration, and end-to-end testing                  |
 
 ---
@@ -35,6 +35,3 @@ This project follows a client-server architecture with separate layers for front
 - Consistent environments across dev and prod.
 - Automated CI/CD pipelines, testing, and deployment.
 
-#### **Caddy**
-- Easy automatic HTTPS with Let's Encrypt.
-- Simple configuration as a reverse proxy.
