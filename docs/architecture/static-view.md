@@ -1,4 +1,6 @@
+```mermaid
 flowchart TB
+
     subgraph External
         ST[Site to be tested]
     end
@@ -18,3 +20,4 @@ flowchart TB
     CK --> MP
     RT --> MP
     RT --> RP
+```
