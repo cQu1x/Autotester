@@ -1,23 +1,25 @@
 ```mermaid
 flowchart TB
 
-    subgraph External
-        ST[Site to be tested]
-    end
+    ST[Site to be tested]
 
     subgraph Core System
+        CK[Cookie Service]
         HS[Handler Service]
+        LLM[LLM API]
         RT[Router]
-        CK[Cookie]
         MP[Main Page]
         RP[Result Page]
-        LLM[LLM]
     end
 
-    ST --> HS
+
+    MP --> RT
+    RP --> RT
+    RT --> HS
+    HS --> CK
+    HS --> ST
     HS --> LLM
     HS --> RT
-    CK --> MP
-    RT --> MP
     RT --> RP
+
 ```
