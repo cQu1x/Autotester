@@ -45,11 +45,37 @@ CI is powered by **GitHub Actions** and defined in the following files:
 
 ---
 
+### Continuous integration
+
+Flutter CI:
+- Link to CI: https://github.com/cQu1x/Autotester/blob/main/.github/workflows/flutter_ci.yml
+- Downloads flutter
+- Runs tests
+- Creates build for web application (important for code updates)
+
+Golang:
+ - Used in-build golang tools for testing
+ - Implemented unit test for cookies and validators. Implemented integration tests for handlers
+ - `tests/` contains all tests
+
+Golang CI:
+ - Link to CI: https://github.com/cQu1x/Autotester/actions/workflows/go-ci.yml
+ - Downloads Golang
+ - Runs tests and linting
+
+Python:
+ - Used python libraries (pytest) for testing
+ - Implemented tests for parser and LLM-connection
+ - `/test_1.py` contains all tests
+
+Python CI:
+ - Link to CI: https://github.com/cQu1x/Autotester/actions/workflows/python-ci.yml
+ - Downloads Python
+ - Runs tests
+
 ##  Triggers
 
 CI workflows run on:
 
 - Every pull request to `main, go-backend, fontend_branch`
 - Manual dispatch via GitHub UI
-
----
