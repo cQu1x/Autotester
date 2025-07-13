@@ -47,6 +47,11 @@ CI is powered by **GitHub Actions** and defined in the following files:
 
 ### Continuous integration
 
+Flutter:
+- Used in-build flutter tools for testing
+- Implemented unit-tests for widgets
+- `frontend/test` contains all tests
+
 Flutter CI:
 - Link to CI: https://github.com/cQu1x/Autotester/blob/main/.github/workflows/flutter_ci.yml
 - Downloads flutter
