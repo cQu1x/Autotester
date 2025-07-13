@@ -1,1 +1,1 @@
-![static-view](./Assests/static-view.jpg)
+![static-view](./Assests/static-view.png)
