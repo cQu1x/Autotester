@@ -29,3 +29,18 @@ This document outlines the automated testing strategy and test types used in the
 cd backend
 go test ./...
 ```
+
+## Frontend Tests (Flutter)
+
+- Unit test for widgets loading implemented
+- Located in `test` folder
+- Cover:
+  - Home page
+  - Result page
+  - Loading page
+
+**Run all frontend tests:**
+```bash
+cd frontend
+flutter test
+```
