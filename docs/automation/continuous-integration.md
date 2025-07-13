@@ -28,7 +28,7 @@ CI is powered by **GitHub Actions** and defined in the following files:
 
 ---
 
-## 🧪 Pipeline Steps
+##  Pipeline Steps
 
 ###  Backend (Go)
 1. Run `go mod tidy`
