@@ -82,8 +82,5 @@ See
 docs/quality-assurance/quality-attribute-scenarios.md
 ```
 
-Link to architecutre README:
-https://github.com/cQu1x/Autotester/tree/main/internal
-
 ### MIT Licence:
 https://github.com/cQu1x/Autotester/blob/main/LICENSE
