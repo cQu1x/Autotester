@@ -18,5 +18,5 @@ We follow a **feature-branch and pull request** based workflow.
    git checkout -b feature/your-feature
    ```
 2. **Pull Requests**
-   Base branch: `main`
-   Keep PRs small, focused, and self-contained
+- Base branch: `main`
+-  Keep PRs small, focused, and self-contained
