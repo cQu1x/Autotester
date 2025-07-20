@@ -21,15 +21,15 @@ func NewResultHandler(config *configs.Config) *ResultHandler {
 }
 
 // Results handles the /api/results endpoint.
-func (h *ResultHandler) Results(w http.ResponseWriter, req *http.Request) {
+func (h *ResultHandler) Results(w http.ResponseWriter, r *http.Request) {
 	log.Println("Received /api/results request")
-	body, err := io.ReadAll(req.Body)
+	body, err := io.ReadAll(r.Body)
 	if err != nil {
 		log.Println("Failed to read request body:", err)
 		res.ErrorResponce(w, "Failed to read request body: "+err.Error(), http.StatusBadRequest)
 		return
 	}
-	defer req.Body.Close()
+	defer r.Body.Close()
 
 	var results []domain.Result
 	if err := json.Unmarshal(body, &results); err != nil {
