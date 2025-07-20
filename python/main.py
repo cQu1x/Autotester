@@ -1,18 +1,12 @@
-import os
 import logging
 import sys
 from this import d
 from typing import List, Any, Optional
-from datetime import datetime
-
 import requests
 from bs4 import BeautifulSoup
 from fastapi import FastAPI
 from pydantic import BaseModel
 from openai import OpenAI
-import undetected_chromedriver as uc
-from selenium.webdriver.chrome.options import Options
-
 
 # --- Logging Configuration ---
 def setup_logging():
