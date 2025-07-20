@@ -9,8 +9,13 @@ import '../providers/test_provider.dart';
 class LoadingPage extends StatefulWidget {
   final String url;
   final List<String> tests;
+  final bool designTest;
 
-  const LoadingPage({super.key, required this.tests, required this.url});
+  const LoadingPage(
+      {super.key,
+      required this.tests,
+      required this.url,
+      required this.designTest});
 
   @override
   State<LoadingPage> createState() => _LoadingPageState();
@@ -26,7 +31,7 @@ class _LoadingPageState extends State<LoadingPage> {
   Future<void> _startTest() async {
     try {
       await Provider.of<TestProvider>(context, listen: false)
-          .runTests(widget.url, widget.tests);
+          .runTests(widget.url, widget.tests, widget.designTest);
       if (mounted) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (_) => const ResultPage()),

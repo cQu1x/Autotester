@@ -15,7 +15,7 @@ func RegisterRoutes(router *http.ServeMux, config *configs.Config) {
 	testsHandler := handlers.NewTestsHandler(config)
 	resultsHandler := handlers.NewResultHandler(config)
 	resultsPDFHandler := handlers.NewResultPDFHandler(config)
-	router.HandleFunc("POST /api/resultsPDF", resultsPDFHandler.ResultsPDF)
+	router.HandleFunc("POST /api/results/pdf", resultsPDFHandler.ResultsPDF)
 	router.HandleFunc("POST /api/checkurl", scanHandler.Check)
 	router.HandleFunc("POST /api/tests", testsHandler.Tests)
 	router.HandleFunc("POST /api/results", resultsHandler.Results)

@@ -8,17 +8,14 @@ class InMemoryTestRepository extends TestRepository {
   final List<Test> _tests = [];
 
   @override
-  Future<List<TestResult>> sendUrlForScan({
-    required String url,
-    required List<String> tests,
-  }) async {
+  Future<List<TestResult>> sendUrlForScan(
+      {required String url,
+      required List<String> tests,
+      required bool designTest}) async {
     final response = await http.post(
       Uri.parse('https://innotest.tech/api/tests'),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'url': url,
-        'tests': tests,
-      }),
+      body: jsonEncode({'url': url, 'tests': tests, 'needUIUX': designTest}),
     );
 
     if (response.statusCode == 200) {
