@@ -22,14 +22,14 @@ func NewResultPDFHandler(config *configs.Config) *ResultPDFHandler {
 
 // ResultsPDF handles the /api/resultsPDF endpoint.
 func (h *ResultPDFHandler) ResultsPDF(w http.ResponseWriter, req *http.Request) {
-	var results domain.TestResult
+	var results []domain.Result
 	err := json.NewDecoder(req.Body).Decode(&results)
 	if err != nil {
 		log.Println("Failed to decode results:", err)
 		res.ErrorResponce(w, "Failed to decode results: "+err.Error(), http.StatusBadRequest)
 		return
 	}
-	pdf, err := util.GeneratePDF(results.Results)
+	pdf, err := util.GeneratePDF(results)
 	if err != nil {
 		log.Println("Failed to generate PDF:", err)
 		res.ErrorResponce(w, "Failed to generate PDF: "+err.Error(), http.StatusInternalServerError)
