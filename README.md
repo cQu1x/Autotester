@@ -83,12 +83,13 @@ We use a GitLab Issue Board with the following columns:
 
 ### Local Development Setup
 
-  ` git clone https://github.com/cQu1x/Autotester
+  ``` 
+    git clone https://github.com/cQu1x/Autotester
     cd Autotester
     docker-compose build
-    docker-compose up -d `
+    docker-compose up -d
+ ```
  
-
 ## Documentation
 ### Quality assurance
 
