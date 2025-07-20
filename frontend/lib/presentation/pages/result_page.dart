@@ -113,6 +113,61 @@ class ResultPage extends StatelessWidget {
                   },
                 ),
               ),
+              SizedBox(
+                height: 70,
+              ),
+              GestureDetector(
+                onTap: () {
+                  //TODO: Implement PDF downloading
+                },
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: 125,
+                    height: 40,
+                    decoration: BoxDecoration(
+                        color: Color(0xFFF5F5F5),
+                        borderRadius: BorderRadius.circular(100)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.file_open_outlined,
+                          color: Color(0xFF898989),
+                          size: 18,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          "PDF Report",
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: "Inter",
+                              color: Color(0xFF898989)),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Container(
+                margin: EdgeInsets.only(bottom: 10),
+                child: Text(
+                  "You can download PDF report with detailed information about testing results & UX/UI feedback",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 10,
+                      fontFamily: "Inter",
+                      color: Color(0xFF898989)),
+                ),
+              )
             ],
           ),
         ),

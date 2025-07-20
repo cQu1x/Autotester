@@ -42,7 +42,10 @@ class AppbarWithText extends StatelessWidget {
                 testProvider.removeAllTests();
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const HomePage()),
+                  MaterialPageRoute(
+                      builder: (context) => HomePage(
+                            tiles: [],
+                          )),
                 );
               },
               child: Center(
