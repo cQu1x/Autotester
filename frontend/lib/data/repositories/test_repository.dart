@@ -6,8 +6,8 @@ abstract class TestRepository {
   void removeTest(String id);
   void removeAllTests();
 
-  Future<List<TestResult>> sendUrlForScan({
-    required String url,
-    required List<String> tests,
-  });
+  Future<List<TestResult>> sendUrlForScan(
+      {required String url,
+      required List<String> tests,
+      required bool designTest});
 }

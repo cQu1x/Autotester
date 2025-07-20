@@ -15,8 +15,9 @@ class TestProvider extends ChangeNotifier {
 
   TestProvider(this.testRepository);
 
-  Future<void> runTests(String url, List<String> tests) async {
-    _results = await testRepository.sendUrlForScan(url: url, tests: tests);
+  Future<void> runTests(String url, List<String> tests, bool designTest) async {
+    _results = await testRepository.sendUrlForScan(
+        url: url, tests: tests, designTest: designTest);
     notifyListeners();
   }
 

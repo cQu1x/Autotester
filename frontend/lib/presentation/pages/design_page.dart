@@ -9,11 +9,12 @@ class DesignPage extends StatelessWidget {
 
   const DesignPage({super.key, required this.url, required this.tests});
 
-  void redirectLoadingPage(BuildContext context) {
+  void redirectLoadingPage(BuildContext context, bool designTest) {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => LoadingPage(
         url: url,
         tests: tests,
+        designTest: designTest,
       ),
     ));
   }
@@ -70,7 +71,7 @@ class DesignPage extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          redirectLoadingPage(context);
+                          redirectLoadingPage(context, false);
                         },
                         child: MouseRegion(
                           cursor: SystemMouseCursors.click,
@@ -120,7 +121,7 @@ class DesignPage extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          redirectLoadingPage(context);
+                          redirectLoadingPage(context, true);
                         },
                         child: MouseRegion(
                           cursor: SystemMouseCursors.click,
@@ -170,25 +171,6 @@ class DesignPage extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
-              height: 30,
-            ),
-            Container(
-              alignment: Alignment.center,
-              width: 145,
-              height: 40,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(40),
-                  color: Color(0xFFF5F5F5)),
-              child: Text(
-                "Never ask again",
-                style: TextStyle(
-                    fontFamily: "Inter",
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16,
-                    color: Color(0xFF898989)),
-              ),
-            )
           ],
         ),
       ),
