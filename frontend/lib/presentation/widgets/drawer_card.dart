@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inno_test/presentation/pages/welcome_page.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/theme_provider.dart';
@@ -45,8 +46,8 @@ class _DrawerCardState extends State<DrawerCard>
     return FadeTransition(
       opacity: _fadeAnimation,
       child: Container(
-        width: 220,
-        height: 250,
+        width: 350,
+        height: 300,
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
         decoration: BoxDecoration(
           color: themeProvider.isDarkTheme ? Color(0xFF303030) : Colors.white,
@@ -64,30 +65,35 @@ class _DrawerCardState extends State<DrawerCard>
           mainAxisSize: MainAxisSize.min,
           children: [
             // Top row with close button — уже готов у тебя
-            Align(
-              alignment: Alignment.topRight,
-              child: MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: GestureDetector(
-                  onTap: widget.onClose,
-                  child: Container(
-                    width: 17,
-                    height: 17,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Color(0xFF898989), width: 1),
-                    ),
-                    child: const Icon(
-                      Icons.close,
-                      size: 12,
-                      color: Color(0xFF898989),
+            Container(
+              margin: EdgeInsets.only(top: 5),
+              child: Align(
+                alignment: Alignment.topRight,
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: widget.onClose,
+                    child: Container(
+                      width: 61,
+                      height: 30,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: Color(0xFFF5F5F5)),
+                      child: Text(
+                        "Close",
+                        style: TextStyle(
+                            color: Color(0xFF898989),
+                            fontSize: 12,
+                            fontFamily: "Inter",
+                            fontWeight: FontWeight.w500),
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 25),
+            const SizedBox(height: 40),
 
             // Dark mode toggle row
             Row(
@@ -110,7 +116,6 @@ class _DrawerCardState extends State<DrawerCard>
               ],
             ),
 
-            // Divider
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 8),
               child: Divider(height: 1, thickness: 1),
@@ -134,7 +139,10 @@ class _DrawerCardState extends State<DrawerCard>
                 color: Color(0xFF898989),
               ),
               onTap: () {
-                // Future use
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => WelcomePage(),
+                ));
+                widget.onClose();
               },
             ),
 

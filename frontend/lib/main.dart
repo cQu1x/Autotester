@@ -46,11 +46,15 @@ class _MyAppState extends State<MyApp> {
     final themeProvider = Provider.of<ThemeProvider>(context);
 
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: true,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: themeProvider.isDarkTheme ? ThemeMode.dark : ThemeMode.light,
-      home: widget.initiallyVisited ? const HomePage() : const WelcomePage(),
+      home: widget.initiallyVisited
+          ? HomePage(
+              tiles: List<String>.of([]),
+            )
+          : const WelcomePage(),
     );
   }
 }
