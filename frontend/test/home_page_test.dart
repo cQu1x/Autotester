@@ -16,7 +16,7 @@ void main() {
           ChangeNotifierProvider(create: (_) => ThemeProvider()),
           ChangeNotifierProvider(create: (_) => TestProvider(testRepository)),
         ],
-        child: const MaterialApp(home: HomePage()),
+        child: MaterialApp(home: HomePage()),
       ),
     );
 

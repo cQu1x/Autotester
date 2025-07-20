@@ -15,7 +15,7 @@ void main() {
           ChangeNotifierProvider(
               create: (_) => TestProvider(InMemoryTestRepository())),
         ],
-        child: const MaterialApp(home: HomePage()),
+        child: MaterialApp(home: HomePage()),
       ),
     );
 
