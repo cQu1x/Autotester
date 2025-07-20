@@ -73,17 +73,34 @@ We use a GitLab Issue Board with the following columns:
     - Feedback (if any) is resolved
     - Issue is closed
 
-## Quality assurance
+## Installation and Deployment
 
-### Quality attribute scenarios
+### Prerequisites
+ - Go 1.24+
+ - Dart 3.8.1 (Flutter 3.32.4)
+ - Python 3.12+
+ - Git
 
-See
-```
-docs/quality-assurance/quality-attribute-scenarios.md
-```
+### Local Development Setup
 
-### Architecture
-### 🧱 Architecture
+  ` git clone https://github.com/cQu1x/Autotester
+    cd Autotester
+    docker-compose build
+    docker-compose up -d `
+ 
+
+## Documentation
+### Quality assurance
+
+- [Quality Attribute Scenarios](https://github.com/cQu1x/Autotester/blob/main/docs/quality-assurance/quality-attribute-scenarios.md)
+- [Automated Tests](https://github.com/cQu1x/Autotester/blob/main/docs/quality-assurance/automated-tests.md)
+- [User Acceptance Tests](https://github.com/cQu1x/Autotester/blob/main/docs/quality-assurance/user-acceptance-tests.md)
+
+### Build and Deployment
+
+- [Continuous Integration](https://github.com/cQu1x/Autotester/blob/main/docs/automation/continuous-integration.md)
+
+###  Architecture
 
 - [Architecture Overview](https://github.com/cQu1x/Autotester/blob/main/docs/architecture/architecture.md)
 - [Static View](https://github.com/cQu1x/Autotester/blob/main/docs/architecture/static-view.md)
