@@ -6,7 +6,11 @@ import '../../domain/model/test.dart';
 class TestProvider extends ChangeNotifier {
   final TestRepository testRepository;
 
-  List<TestResult> _results = [];
+  List<TestResult> _results = [
+    TestResult(test: "Some test 1", result: false),
+    TestResult(test: "Some test 2", result: true),
+    TestResult(test: "Some test 3", result: true),
+  ];
   List<TestResult> get results => _results;
 
   TestProvider(this.testRepository);
@@ -33,5 +37,13 @@ class TestProvider extends ChangeNotifier {
   void removeAllTests() {
     testRepository.removeAllTests();
     notifyListeners();
+  }
+
+  Test? getTestById(String id) {
+    try {
+      return getTests().firstWhere((t) => t.id == id);
+    } catch (_) {
+      return null;
+    }
   }
 }

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:inno_test/domain/enums/test_variant_type.dart';
+import 'package:inno_test/presentation/pages/design_page.dart';
 import 'package:inno_test/presentation/providers/test_provider.dart';
 import 'package:inno_test/presentation/widgets/appbars/appbar_home_page.dart';
 import 'package:inno_test/presentation/widgets/attribute_check_tile.dart';
@@ -11,11 +12,14 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../providers/theme_provider.dart';
+import '../widgets/component_test_dialog.dart';
+import '../widgets/component_test_tile.dart';
 import '../widgets/smart_input_tile.dart';
-import 'loading_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final List<String> tiles;
+
+  const HomePage({super.key, required this.tiles});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -25,7 +29,7 @@ class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   final TextEditingController textEditingController = TextEditingController();
   final ScrollController scrollController = ScrollController();
-  final List<String> _tiles = [];
+  bool sendButtonStyle = false;
   bool _isUrlInvalid = false;
 
   late AnimationController _animationController;
@@ -76,17 +80,18 @@ class _HomePageState extends State<HomePage>
   Future<void> sendUrl(TestProvider testProvider) async {
     final url = textEditingController.text.trim();
 
-    if (url.isEmpty || _tiles.isEmpty) {
+    if (url.isEmpty || widget.tiles.isEmpty) {
       errorInUrl();
       return;
     }
 
     try {
       final response = await http.post(
-        Uri.parse('http://31.129.111.114:8080/api/checkurl'),
+        Uri.parse('http://localhost:8081/api/checkurl'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({'url': url}),
       );
+      print("${response.body} wtf");
       final setCookie = response.headers['set-cookie'];
       if (setCookie != null && setCookie.contains('instructions shown=true')) {
         final prefs = await SharedPreferences.getInstance();
@@ -97,7 +102,7 @@ class _HomePageState extends State<HomePage>
 
       if (data['status'] == 'success') {
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (_) => LoadingPage(
+          builder: (_) => DesignPage(
             url: url,
             tests: testProvider.getTests().map((e) => e.testName).toList(),
           ),
@@ -106,6 +111,7 @@ class _HomePageState extends State<HomePage>
         errorInUrl();
       }
     } catch (e) {
+      print(e.toString());
       errorInUrl();
     }
   }
@@ -115,10 +121,12 @@ class _HomePageState extends State<HomePage>
     var id = DateTime.now().microsecondsSinceEpoch.toString();
     id += (type == TestVariantType.existence)
         ? "|ex"
-        : ((type == TestVariantType.attributeCheck) ? "|attr" : "|int");
+        : ((type == TestVariantType.attributeCheck)
+            ? "|attr"
+            : ((type == TestVariantType.interactionCheck) ? "|int" : "|comp"));
     setState(() {
-      if (testProvider.getTests().length == _tiles.length) {
-        _tiles.add(id);
+      if (testProvider.getTests().length == widget.tiles.length) {
+        widget.tiles.insert(0, id);
       }
     });
 
@@ -131,10 +139,25 @@ class _HomePageState extends State<HomePage>
     });
   }
 
+  void _redirectComponentScanDialog() {
+    showDialog(
+      context: context,
+      builder: (_) => ComponentTestDialog(
+        onSaved: (newId) {
+          setState(() {
+            widget.tiles.insert(0, newId);
+          });
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     final testProvider = Provider.of<TestProvider>(context);
+    print('tiles: ${widget.tiles}');
+    print('tests in provider: ${testProvider.getTests().map((e) => e.id)}');
 
     return Scaffold(
       appBar: PreferredSize(
@@ -195,44 +218,35 @@ class _HomePageState extends State<HomePage>
                           ),
                           child: TextFormField(
                             style: TextStyle(fontWeight: FontWeight.w500),
+                            onChanged: (text) {
+                              setState(() {});
+                            },
                             onFieldSubmitted: (text) {
                               sendUrl(testProvider);
                             },
                             cursorColor: Color(0xFF0088FF),
                             controller: textEditingController,
                             decoration: InputDecoration(
-                              contentPadding:
-                                  const EdgeInsets.symmetric(vertical: 12),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 12, horizontal: 12),
                               hintStyle: const TextStyle(
                                   color: Color(0xFF898989),
                                   fontWeight: FontWeight.w400,
                                   fontFamily: "Inter"),
                               hintText: "Paste link",
                               border: InputBorder.none,
-                              icon: Container(
-                                width: 40,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                    color: themeProvider.isDarkTheme
-                                        ? const Color(0xFF898989)
-                                        : const Color(0xFFD9D9D9),
-                                    shape: BoxShape.circle),
-                                child: IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(
-                                    Icons.image,
-                                    color: themeProvider.isDarkTheme
-                                        ? const Color(0xFFF5F5F5)
-                                        : const Color(0xFFF5F5F5),
-                                  ),
-                                ),
-                              ),
                               suffixIcon: Container(
                                 width: 40,
                                 height: 40,
-                                decoration: const BoxDecoration(
-                                    color: Color(0xFF0088FF),
-                                    shape: BoxShape.circle),
+                                decoration: BoxDecoration(
+                                  color: (testProvider.getTests().isNotEmpty &&
+                                          textEditingController.text
+                                              .trim()
+                                              .isNotEmpty)
+                                      ? const Color(0xFF0088FF)
+                                      : const Color(0xFFD9D9D9),
+                                  shape: BoxShape.circle,
+                                ),
                                 child: IconButton(
                                   onPressed: () {
                                     sendUrl(testProvider);
@@ -285,6 +299,14 @@ class _HomePageState extends State<HomePage>
                         text: "Clickability",
                         type: TestVariantType.interactionCheck,
                       ),
+                      SizedBox(
+                        width: 25,
+                      ),
+                      ScenarioButton(
+                        onPressed: _redirectComponentScanDialog,
+                        text: "Integration",
+                        type: TestVariantType.componentScan,
+                      ),
                     ],
                   ),
                   SizedBox(
@@ -294,10 +316,10 @@ class _HomePageState extends State<HomePage>
                     alignment: Alignment.center,
                     margin: const EdgeInsets.only(bottom: 140),
                     child: Column(
-                      children: _tiles.map((tileId) {
+                      children: widget.tiles.map((tileId) {
                         final idParts = tileId.split('|');
                         final id = idParts[0];
-                        final type = idParts.length > 1 ? idParts[1] : 'ex';
+                        final type = idParts[1];
 
                         if (type == 'attr') {
                           return AttributeCheckTile(
@@ -305,7 +327,7 @@ class _HomePageState extends State<HomePage>
                             id: id,
                             onDelete: () {
                               setState(() {
-                                _tiles.remove(tileId);
+                                widget.tiles.remove(tileId);
                               });
                             },
                           );
@@ -315,21 +337,31 @@ class _HomePageState extends State<HomePage>
                             id: id,
                             onDelete: () {
                               setState(() {
-                                _tiles.remove(tileId);
+                                widget.tiles.remove(tileId);
                               });
                             },
                             type: TestVariantType.existence,
                           );
-                        } else {
+                        } else if (type == "int") {
                           return SmartInputTile(
                             key: ValueKey(tileId),
                             id: id,
                             onDelete: () {
                               setState(() {
-                                _tiles.remove(tileId);
+                                widget.tiles.remove(tileId);
                               });
                             },
                             type: TestVariantType.interactionCheck,
+                          );
+                        } else {
+                          return ComponentTestTile(
+                            key: ValueKey(tileId),
+                            id: tileId,
+                            onDelete: () {
+                              setState(() {
+                                widget.tiles.remove(tileId);
+                              });
+                            },
                           );
                         }
                       }).toList(),
@@ -344,13 +376,13 @@ class _HomePageState extends State<HomePage>
             margin: EdgeInsets.only(bottom: 50),
             child: MouseRegion(
               cursor: SystemMouseCursors.click,
-              child: _tiles.isEmpty
+              child: widget.tiles.isEmpty
                   ? Text("")
                   : GestureDetector(
                       onTap: () {
                         testProvider.removeAllTests();
                         setState(() {
-                          _tiles.clear();
+                          widget.tiles.clear();
                         });
                       },
                       child: Container(

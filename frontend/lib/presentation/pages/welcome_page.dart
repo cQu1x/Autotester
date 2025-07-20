@@ -33,7 +33,10 @@ class _WelcomePageState extends State<WelcomePage> {
     await prefs.setBool('instructions_shown', true);
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (_) => const HomePage()),
+      MaterialPageRoute(
+          builder: (_) => HomePage(
+                tiles: List<String>.of([]),
+              )),
     );
   }
 
@@ -53,95 +56,98 @@ class _WelcomePageState extends State<WelcomePage> {
 
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(height: 10),
-            SizedBox(
-              height: 100,
-              width: 100,
-              child: Image.asset('assets/images/handshaking.png'),
-            ),
-            const SizedBox(height: 10),
-            const Text(
-              "Welcome to Inno Test",
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              "Here you can test any website",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-            ),
-            const SizedBox(height: 30),
-            Container(
-              width: 500,
-              height: 500,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(25),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 20,
-                    spreadRadius: 5,
-                    offset: Offset(0, 10),
-                  ),
-                ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(height: 10),
+              SizedBox(
+                height: 100,
+                width: 100,
+                child: Image.asset('assets/images/handshaking.png'),
               ),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 50.0),
-                      child: Column(
-                        children: [
-                          Image.asset(
-                            step.image,
-                            width: 300,
-                            height: 150,
-                            fit: BoxFit.contain,
-                          ),
-                          const SizedBox(height: 5),
-                          Text(
-                            step.text,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    MouseRegion(
-                      cursor: SystemMouseCursors.click,
-                      child: GestureDetector(
-                        onTap: _nextStep,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFF5F5F5),
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          alignment: Alignment.center,
-                          width: currentStep < steps.length - 1 ? 75 : 107,
-                          height: 30,
-                          child: Text(
-                            currentStep < steps.length - 1
-                                ? 'Next'
-                                : "Let's start",
-                            style: const TextStyle(fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                      ),
+              const SizedBox(height: 10),
+              const Text(
+                "Welcome to Inno Test",
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                "Here you can test any website",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+              ),
+              const SizedBox(height: 30),
+              Container(
+                width: 500,
+                height: 500,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(25),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 20,
+                      spreadRadius: 5,
+                      offset: Offset(0, 10),
                     ),
                   ],
                 ),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 50.0),
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              step.image,
+                              width: 300,
+                              height: 150,
+                              fit: BoxFit.contain,
+                            ),
+                            const SizedBox(height: 5),
+                            Text(
+                              step.text,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: GestureDetector(
+                          onTap: _nextStep,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFF5F5F5),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            alignment: Alignment.center,
+                            width: currentStep < steps.length - 1 ? 75 : 107,
+                            height: 30,
+                            child: Text(
+                              currentStep < steps.length - 1
+                                  ? 'Next'
+                                  : "Let's start",
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

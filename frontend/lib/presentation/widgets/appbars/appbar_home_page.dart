@@ -131,7 +131,7 @@ class _AppBarHomePageState extends State<AppBarHomePage> {
 
                       _showOverlay(
                         position: Offset(
-                            position.dx - 220, position.dy + 40), // ← было -170
+                            position.dx - 300, position.dy + 20), // ← было -170
                         content: DrawerCard(onClose: _removeOverlay),
                       );
                     },
