@@ -33,10 +33,7 @@ class _WelcomePageState extends State<WelcomePage> {
     await prefs.setBool('instructions_shown', true);
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(
-          builder: (_) => HomePage(
-                tiles: List<String>.of([]),
-              )),
+      MaterialPageRoute(builder: (_) => HomePage()),
     );
   }
 

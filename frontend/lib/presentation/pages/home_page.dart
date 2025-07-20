@@ -17,9 +17,7 @@ import '../widgets/component_test_tile.dart';
 import '../widgets/smart_input_tile.dart';
 
 class HomePage extends StatefulWidget {
-  final List<String> tiles;
-
-  const HomePage({super.key, required this.tiles});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -31,6 +29,7 @@ class _HomePageState extends State<HomePage>
   final ScrollController scrollController = ScrollController();
   bool sendButtonStyle = false;
   bool _isUrlInvalid = false;
+  List<String> tiles = List<String>.of([]);
 
   late AnimationController _animationController;
   late Animation<double> _shakeAnimation;
@@ -80,18 +79,18 @@ class _HomePageState extends State<HomePage>
   Future<void> sendUrl(TestProvider testProvider) async {
     final url = textEditingController.text.trim();
 
-    if (url.isEmpty || widget.tiles.isEmpty) {
+    if (url.isEmpty || tiles.isEmpty) {
       errorInUrl();
       return;
     }
 
     try {
       final response = await http.post(
-        Uri.parse('http://localhost:8081/api/checkurl'),
+        Uri.parse('https://innotest.tech/api/checkurl'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({'url': url}),
       );
-      print("${response.body} wtf");
+      print("${response.body}");
       final setCookie = response.headers['set-cookie'];
       if (setCookie != null && setCookie.contains('instructions shown=true')) {
         final prefs = await SharedPreferences.getInstance();
@@ -125,8 +124,8 @@ class _HomePageState extends State<HomePage>
             ? "|attr"
             : ((type == TestVariantType.interactionCheck) ? "|int" : "|comp"));
     setState(() {
-      if (testProvider.getTests().length == widget.tiles.length) {
-        widget.tiles.insert(0, id);
+      if (testProvider.getTests().length == tiles.length) {
+        tiles.insert(0, id);
       }
     });
 
@@ -145,7 +144,7 @@ class _HomePageState extends State<HomePage>
       builder: (_) => ComponentTestDialog(
         onSaved: (newId) {
           setState(() {
-            widget.tiles.insert(0, newId);
+            tiles.insert(0, newId);
           });
         },
       ),
@@ -156,7 +155,7 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     final testProvider = Provider.of<TestProvider>(context);
-    print('tiles: ${widget.tiles}');
+    print('tiles: ${tiles}');
     print('tests in provider: ${testProvider.getTests().map((e) => e.id)}');
 
     return Scaffold(
@@ -316,7 +315,7 @@ class _HomePageState extends State<HomePage>
                     alignment: Alignment.center,
                     margin: const EdgeInsets.only(bottom: 140),
                     child: Column(
-                      children: widget.tiles.map((tileId) {
+                      children: tiles.map((tileId) {
                         final idParts = tileId.split('|');
                         final id = idParts[0];
                         final type = idParts[1];
@@ -327,7 +326,7 @@ class _HomePageState extends State<HomePage>
                             id: id,
                             onDelete: () {
                               setState(() {
-                                widget.tiles.remove(tileId);
+                                tiles.remove(tileId);
                               });
                             },
                           );
@@ -337,7 +336,7 @@ class _HomePageState extends State<HomePage>
                             id: id,
                             onDelete: () {
                               setState(() {
-                                widget.tiles.remove(tileId);
+                                tiles.remove(tileId);
                               });
                             },
                             type: TestVariantType.existence,
@@ -348,7 +347,7 @@ class _HomePageState extends State<HomePage>
                             id: id,
                             onDelete: () {
                               setState(() {
-                                widget.tiles.remove(tileId);
+                                tiles.remove(tileId);
                               });
                             },
                             type: TestVariantType.interactionCheck,
@@ -359,7 +358,7 @@ class _HomePageState extends State<HomePage>
                             id: tileId,
                             onDelete: () {
                               setState(() {
-                                widget.tiles.remove(tileId);
+                                tiles.remove(tileId);
                               });
                             },
                           );
@@ -376,13 +375,13 @@ class _HomePageState extends State<HomePage>
             margin: EdgeInsets.only(bottom: 50),
             child: MouseRegion(
               cursor: SystemMouseCursors.click,
-              child: widget.tiles.isEmpty
+              child: tiles.isEmpty
                   ? Text("")
                   : GestureDetector(
                       onTap: () {
                         testProvider.removeAllTests();
                         setState(() {
-                          widget.tiles.clear();
+                          tiles.clear();
                         });
                       },
                       child: Container(
