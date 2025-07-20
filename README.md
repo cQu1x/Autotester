@@ -92,7 +92,7 @@ We use a GitLab Issue Board with the following columns:
  
 ## Documentation
 
-#### 🧠 **Why it's important (for customer):**  
+#### 🧠 **For customer:**  
 > This section contains essential information about how the system checks your website. Even if you're not a developer, it helps you understand the logic behind test results — why something passes ✅ or fails ❌.  
 > 
 > You can explore:
@@ -115,7 +115,7 @@ We use a GitLab Issue Board with the following columns:
 
 ###  Architecture
 
-#### 🧱 **Why it's important (for customer):**  
+#### 🧱 **For customer:**  
 > The architecture section gives you a high-level view of how the system works. You don’t need to know the internal code, but understanding the data flow helps in conversations with developers or IT teams.  
 > 
 > For example:
