@@ -64,9 +64,7 @@ class _ComponentTestPageState extends State<ComponentTestPage> {
 
   void _redirectHomePage() {
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (_) => HomePage(
-        tiles: widget.tiles,
-      ),
+      builder: (_) => HomePage(),
     ));
   }
 

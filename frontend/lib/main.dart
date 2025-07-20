@@ -50,11 +50,7 @@ class _MyAppState extends State<MyApp> {
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: themeProvider.isDarkTheme ? ThemeMode.dark : ThemeMode.light,
-      home: widget.initiallyVisited
-          ? HomePage(
-              tiles: List<String>.of([]),
-            )
-          : const WelcomePage(),
+      home: widget.initiallyVisited ? HomePage() : const WelcomePage(),
     );
   }
 }
