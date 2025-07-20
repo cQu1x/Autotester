@@ -4,7 +4,7 @@ package domain
 type UrlRequest struct {
 	Url      string   `json:"url" validate:"required,http_url"`
 	Tests    []string `json:"tests,omitempty"`
-	NeedUIUX bool     `json:"needUIUX,omitempty"`
+	NeedUIUX bool     `json:"needUIUX"`
 }
 
 // APIResponse represents a standard response structure for API endpoints.
@@ -19,10 +19,4 @@ type Result struct {
 	Test    string `json:"test"`
 	Result  bool   `json:"result"`
 	Comment string `json:"comment,omitempty"`
-}
-
-type TestResult struct {
-	Status  string   `json:"status"`
-	Results []Result `json:"results"`
-	Error   string   `json:"error,omitempty"`
 }
