@@ -12,7 +12,7 @@ def test_ask_ai_success(mock_create):
     response = ask_ai("Does logo exist?")
     assert response == "Yes"
 
-@patch("main.sync_playwright")
+@patch("playwright.sync_api.sync_playwright")
 def test_fetch_page(mock_playwright):
     mock_browser = MagicMock()
     mock_context = MagicMock()
@@ -38,7 +38,7 @@ def test_check_page_success(mock_fetch, mock_ai):
     assert result == [True]
 
 @patch("main.ask_ai")
-@patch("main.sync_playwright")
+@patch("playwright.sync_api.sync_playwright")
 def test_integration_test_success(mock_playwright, mock_ai):
     # LLM returns successful result immediately
     mock_ai.return_value = '<json>{"status": "success", "message": "Done"}</json>'
