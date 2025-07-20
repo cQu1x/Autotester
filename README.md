@@ -82,5 +82,13 @@ See
 docs/quality-assurance/quality-attribute-scenarios.md
 ```
 
+### Architecture
+### 🧱 Architecture
+
+- [Architecture Overview](#https://github.com/cQu1x/Autotester/blob/main/docs/architecture/architecture.md)
+- [Static View](#https://github.com/cQu1x/Autotester/blob/main/docs/architecture/static-view.md)
+- [Dynamic View](#https://github.com/cQu1x/Autotester/blob/main/docs/architecture/dynamic-view.md)
+- [Deployment View](#https://github.com/cQu1x/Autotester/blob/main/docs/architecture/deployment-view.md)
+
 ### MIT Licence:
 https://github.com/cQu1x/Autotester/blob/main/LICENSE
