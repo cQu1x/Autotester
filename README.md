@@ -91,6 +91,18 @@ We use a GitLab Issue Board with the following columns:
  ```
  
 ## Documentation
+
+> 🧠 **Why it's important (for customer):**  
+> This section contains essential information about how the system checks your website. Even if you're not a developer, it helps you understand the logic behind test results — why something passes ✅ or fails ❌.  
+> 
+> You can explore:
+> - What kinds of errors and issues the system is designed to catch
+> - How automated tests validate your requirements
+> - How final acceptance is determined from the user’s perspective
+> 
+> This helps ensure that the product meets your expectations and business goals.
+
+
 ### Quality assurance
 
 - [Quality Attribute Scenarios](https://github.com/cQu1x/Autotester/blob/main/docs/quality-assurance/quality-attribute-scenarios.md)
@@ -102,6 +114,14 @@ We use a GitLab Issue Board with the following columns:
 - [Continuous Integration](https://github.com/cQu1x/Autotester/blob/main/docs/automation/continuous-integration.md)
 
 ###  Architecture
+
+> 🧱 **Why it's important (for customer):**  
+> The architecture section gives you a high-level view of how the system works. You don’t need to know the internal code, but understanding the data flow helps in conversations with developers or IT teams.  
+> 
+> For example:
+> - You can see where your test request goes after submission
+> - How the test logic and AI models are connected
+> - Where results are stored and how the PDF report is generated  
 
 - [Architecture Overview](https://github.com/cQu1x/Autotester/blob/main/docs/architecture/architecture.md)
 - [Static View](https://github.com/cQu1x/Autotester/blob/main/docs/architecture/static-view.md)
