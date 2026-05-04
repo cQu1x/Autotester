@@ -9,9 +9,6 @@ Automatically check websites using custom test cases — simple, fast, and witho
 ### Project Goal(s) and Description
 The goal of the project is to create a simple and accessible tool for checking websites for basic interface elements such as fields, buttons, and headings. The user enters a URL and specifies what needs to be checked, and the system runs an automated test and provides a result in the form of ✅/❌ for each question.
 
-## Development
-
-
 
 
 
